@@ -45,18 +45,92 @@ const DAYS_DATA: Day[] = [
   {
     id: 'd0', date: '28 Mei · Kam', label: 'Hari ini → Start langsung!', dot: 'dot-normal', status: 'status-normal', statusLabel: 'FULL',
     rows: [
-      { id: 'r0_0', time: '15:00–18:00', task: 'Mulai 400 Artikel — Batch 1', sub: 'Bikin template dulu, gas sebanyak mungkin', badge: 'badge-artikel', badgeLabel: 'ARTIKEL' },
-      { id: 'r0_1', time: '19:00–21:00', task: 'Artikel Batch 2', sub: 'Tetap gas, manfaatkan momentum', badge: 'badge-artikel', badgeLabel: 'ARTIKEL' },
-      { id: 'r0_2', time: '21:00–22:00', task: 'Hubungi kelompok SCM', sub: 'Koordinasi jadwal diskusi', badge: 'badge-jurnal', badgeLabel: 'SCM' },
+      { id: 'r0_0', time: '15:00–18:00', task: 'Mulai 400 Artikel — Batch 1 (~50–60 artikel)', sub: 'Bikin template dulu, gas sebanyak mungkin', badge: 'badge-artikel', badgeLabel: 'ARTIKEL' },
+      { id: 'r0_1', time: '19:00–21:00', task: 'Artikel Batch 2 (~40 artikel)', sub: 'Tetap gas, manfaatkan momentum hari pertama', badge: 'badge-artikel', badgeLabel: 'ARTIKEL' },
+      { id: 'r0_2', time: '21:00–22:00', task: 'Hubungi kelompok SCM', sub: 'Koordinasi jadwal diskusi & bagi tugas rancangan jurnal', badge: 'badge-jurnal', badgeLabel: 'SCM' },
     ]
   },
   {
     id: 'd1', date: '29 Mei · Jum', label: 'Full day — kebut artikel!', dot: 'dot-normal', status: 'status-normal', statusLabel: 'FULL',
     rows: [
-      { id: 'r1_0', time: '08:00–12:00', task: '400 Artikel — Batch 3', sub: 'Sesi pagi paling produktif, push keras', badge: 'badge-artikel', badgeLabel: 'ARTIKEL' },
-      { id: 'r1_1', time: '13:00–16:00', task: '400 Artikel — Batch 4', sub: 'Target ~230 artikel sudah selesai hari ini', badge: 'badge-artikel', badgeLabel: 'ARTIKEL' },
-      { id: 'r1_2', time: '16:00–18:00', task: 'Diskusi kelompok SCM', sub: 'Rancang struktur jurnal', badge: 'badge-jurnal', badgeLabel: 'SCM' },
-      { id: 'r1_3', time: '19:00–21:00', task: 'Rev SPK + Task 3 ERP', sub: 'Beresin yang tinggal finishing', badge: 'badge-spk', badgeLabel: 'SPK/ERP' },
+      { id: 'r1_0', time: '08:00–12:00', task: '400 Artikel — Batch 3 (~80 artikel)', sub: 'Sesi pagi paling produktif, push keras', badge: 'badge-artikel', badgeLabel: 'ARTIKEL' },
+      { id: 'r1_1', time: '13:00–16:00', task: '400 Artikel — Batch 4 (~60 artikel)', sub: 'Target ~230 artikel sudah selesai hari ini', badge: 'badge-artikel', badgeLabel: 'ARTIKEL' },
+      { id: 'r1_2', time: '16:00–18:00', task: 'Diskusi kelompok SCM', sub: 'Rancang struktur jurnal, bagi bagian penulisan', badge: 'badge-jurnal', badgeLabel: 'SCM' },
+      { id: 'r1_3', time: '19:00–21:00', task: 'Rev SPK + Task 3 ERP', sub: 'Beresin yang tinggal finishing, biar kepala lebih lega', badge: 'badge-spk', badgeLabel: 'SPK/ERP' },
+    ]
+  },
+  {
+    id: 'd2', date: '30 Mei · Sab', label: '⚠️ Kemungkinan cabut, no signal', dot: 'dot-offline', status: 'status-offline', statusLabel: 'MUNGKIN OFF',
+    rows: [
+      { id: 'r2_0', time: 'Pagi (jika ada)', task: 'Last push Artikel sebelum cabut', sub: 'Target tambah 50–70 artikel. Jika ~280+ artikel, lumayan aman', badge: 'badge-artikel', badgeLabel: 'ARTIKEL' },
+      { id: 'r2_1', time: 'Jika offline', task: 'Tulis draf offline: Jurnal EAP & SCM', sub: 'Manfaatkan waktu tanpa distraksi, tulis di dokumen lokal', badge: 'badge-jurnal', badgeLabel: 'JURNAL' },
+    ]
+  },
+  {
+    id: 'd3', date: '31 Mei · Ming', label: '⚠️ DEADLINE 400 Artikel!', dot: 'dot-offline', status: 'status-offline', statusLabel: 'DEADLINE ARTIKEL',
+    rows: [
+      { id: 'r3_0', time: 'Sebelum cabut', task: '🎯 SUBMIT 400 Artikel!', sub: 'Prioritas nomor 1. Pastikan sudah submit sebelum pergi / deadline', badge: 'badge-artikel', badgeLabel: 'DEADLINE!' },
+      { id: 'r3_1', time: 'Sisa waktu', task: 'Tulis draf offline (jurnal, feed IG)', sub: 'Jika beneran no signal, tulis draf kasar yang bisa di-upload nanti', badge: 'badge-rest', badgeLabel: 'OFFLINE' },
+    ]
+  },
+  {
+    id: 'd4', date: '1 Jun · Sen', label: 'Kepotong — sore ke malam saja', dot: 'dot-cut', status: 'status-cut', statusLabel: 'SORE–MALAM',
+    rows: [
+      { id: 'r4_0', time: '17:00–19:00', task: 'Observasi ke Desa — Jurnal EAP', sub: 'Jadwalkan kunjungan/wawancara desa, catat semua data mentah', badge: 'badge-jurnal', badgeLabel: 'EAP' },
+      { id: 'r4_1', time: '19:30–22:00', task: 'Tulis Jurnal EAP — Bagian 1', sub: 'Langsung tulis setelah observasi, sementara data masih segar', badge: 'badge-jurnal', badgeLabel: 'EAP' },
+    ]
+  },
+  {
+    id: 'd5', date: '2 Jun · Sel', label: 'Kepotong — sore ke malam saja', dot: 'dot-cut', status: 'status-cut', statusLabel: 'SORE–MALAM',
+    rows: [
+      { id: 'r5_0', time: '17:00–19:30', task: 'Lanjut + Finalisasi Jurnal EAP', sub: 'Tulis bagian analisis & kesimpulan, review draft', badge: 'badge-jurnal', badgeLabel: 'EAP' },
+      { id: 'r5_1', time: '19:30–22:00', task: 'Jurnal SCM — Tulis bagian sendiri', sub: 'Kerjain bagian yang sudah dibagi saat diskusi kelompok', badge: 'badge-jurnal', badgeLabel: 'SCM' },
+    ]
+  },
+  {
+    id: 'd6', date: '3 Jun · Rab', label: 'Kepotong — sore ke malam saja', dot: 'dot-cut', status: 'status-cut', statusLabel: 'SORE–MALAM',
+    rows: [
+      { id: 'r6_0', time: '17:00–19:30', task: 'Jurnal SCM — Gabung + Review Kelompok', sub: 'Konsolidasi tulisan kelompok, revisi bersama', badge: 'badge-jurnal', badgeLabel: 'SCM' },
+      { id: 'r6_1', time: '19:30–22:00', task: 'Mulai Feed IG KKN — Draf konten', sub: 'Buat calendar konten: feed, reels, report, progress', badge: 'badge-ig', badgeLabel: 'IG KKN' },
+    ]
+  },
+  {
+    id: 'd7', date: '4 Jun · Kam', label: 'FREE — Website day!', dot: 'dot-normal', status: 'status-normal', statusLabel: 'FULL',
+    rows: [
+      { id: 'r7_0', time: '08:00–13:00', task: 'Bangun Website Bisnis — Struktur + Desain', sub: 'Setup domain/hosting, buat halaman utama, tentukan layout', badge: 'badge-web', badgeLabel: 'WEBSITE' },
+      { id: 'r7_1', time: '14:00–18:00', task: 'Website — Konten + Fitur Lengkap', sub: 'Isi konten bisnis, produk/jasa, kontak, dll', badge: 'badge-web', badgeLabel: 'WEBSITE' },
+      { id: 'r7_2', time: '19:00–22:00', task: 'Mulai Laporan Website', sub: 'Tulis latar belakang, tujuan, deskripsi bisnis', badge: 'badge-web', badgeLabel: 'LAPORAN' },
+    ]
+  },
+  {
+    id: 'd8', date: '5 Jun · Jum', label: 'FREE — Finalisasi website + IG', dot: 'dot-normal', status: 'status-normal', statusLabel: 'FULL',
+    rows: [
+      { id: 'r8_0', time: '08:00–11:00', task: 'Finalisasi Website + Testing', sub: 'Cek semua halaman, mobile responsive, live URL', badge: 'badge-web', badgeLabel: 'WEBSITE' },
+      { id: 'r8_1', time: '11:00–14:00', task: 'Selesaikan Laporan Website', sub: 'Lengkapi lampiran, screenshot, evaluasi', badge: 'badge-web', badgeLabel: 'LAPORAN' },
+      { id: 'r8_2', time: '14:00–18:00', task: 'Feed IG KKN — Desain visual + caption', sub: 'Buat konten visual (Canva/dll), tulis caption semua post', badge: 'badge-ig', badgeLabel: 'IG KKN' },
+      { id: 'r8_3', time: '19:00–21:00', task: 'Finalisasi Jurnal EAP & SCM', sub: 'Review akhir, format, cek referensi', badge: 'badge-jurnal', badgeLabel: 'JURNAL' },
+    ]
+  },
+  {
+    id: 'd9', date: '6 Jun · Sab', label: 'FREE — Review semua + IG final', dot: 'dot-normal', status: 'status-normal', statusLabel: 'FULL',
+    rows: [
+      { id: 'r9_0', time: '09:00–12:00', task: 'Finalisasi Feed IG KKN', sub: 'Susun jadwal posting, final approval semua konten', badge: 'badge-ig', badgeLabel: 'IG KKN' },
+      { id: 'r9_1', time: '13:00–16:00', task: 'Review & Kompilasi Semua Task', sub: 'Cek checklist: jurnal, website, laporan, artikel, IG', badge: 'badge-rest', badgeLabel: 'REVIEW' },
+      { id: 'r9_2', time: '16:00–19:00', task: 'BUFFER — Perbaikan & Pelengkapan', sub: 'Kejar task yang masih kurang, jangan kebut di hari-H', badge: 'badge-rest', badgeLabel: 'BUFFER' },
+    ]
+  },
+  {
+    id: 'd10', date: '7 Jun · Ming', label: 'FREE — Final check, siap submit', dot: 'dot-normal', status: 'status-normal', statusLabel: 'FULL',
+    rows: [
+      { id: 'r10_0', time: '09:00–13:00', task: 'Final Proofread & Format Semua Dokumen', sub: 'Jurnal EAP, SCM, laporan website — format & nama file benar', badge: 'badge-rest', badgeLabel: 'FINAL' },
+      { id: 'r10_1', time: '13:00–16:00', task: 'Kompilasi file, ZIP, siap submit besok', sub: 'Susun semua file dalam folder, double check semua lengkap', badge: 'badge-rest', badgeLabel: 'SUBMIT PREP' },
+      { id: 'r10_2', time: '16:00+', task: '🎉 Rest — Kamu udah kerja keras!', sub: 'Istirahat, jangan begadang malam H-1 deadline', badge: 'badge-rest', badgeLabel: 'REST' },
+    ]
+  },
+  {
+    id: 'd11', date: '8 Jun · Sen', label: '🎯 DEADLINE — Submit semua!', dot: 'dot-deadline', status: 'status-deadline', statusLabel: 'DEADLINE',
+    rows: [
+      { id: 'r11_0', time: 'Pagi', task: '✅ Submit semua task sesuai ketentuan', sub: 'Jurnal EAP, Jurnal SCM, Website + Laporan, Feed IG, Rev SPK, ERP Task 3', badge: 'badge-rest', badgeLabel: 'SUBMIT ALL' },
     ]
   },
 ];
@@ -163,6 +237,29 @@ export default function TrackerPage() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+        
+        :root {
+          --bg: #0a0a0f;
+          --surface: #12121a;
+          --surface2: #1a1a26;
+          --border: #2a2a3a;
+          --accent: #6c63ff;
+          --accent2: #ff6584;
+          --accent3: #43e97b;
+          --accent4: #f9ca24;
+          --accent5: #fd79a8;
+          --text: #e8e8f0;
+          --muted: #7878a0;
+          --danger: #ff4d6d;
+          --warning: #ffd60a;
+          --done-bg: rgba(67,233,123,0.06);
+          --done-border: rgba(67,233,123,0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; overflow-x: hidden; font-size: 14px; }
+
         .tracker-container { max-width: 860px; margin: 0 auto; padding: 32px 16px 100px; }
         .header { margin-bottom: 32px; animation: fadeUp .6s ease both; }
         .headerBadge { display: inline-flex; align-items: center; gap: 7px; background: rgba(108,99,255,.12); border: 1px solid rgba(108,99,255,.3); border-radius: 100px; padding: 5px 14px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
@@ -219,6 +316,7 @@ export default function TrackerPage() {
         .dotNormal { background: var(--accent); }
         .dotCut { background: var(--warning); }
         .dotOffline { background: var(--danger); }
+        .dotDeadline { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); animation: pulse 1.5s infinite; }
         .dayDate { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; min-width: 72px; flex-shrink: 0; }
         .dayLabel { font-size: 11px; color: var(--muted); flex: 1; line-height: 1.3; }
         .dayRight { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
@@ -226,6 +324,7 @@ export default function TrackerPage() {
         .statusNormal { background: rgba(108,99,255,.12); color: var(--accent); border: 1px solid rgba(108,99,255,.25); }
         .statusCut { background: rgba(255,214,10,.1); color: var(--warning); border: 1px solid rgba(255,214,10,.25); }
         .statusOffline { background: rgba(255,77,109,.1); color: var(--danger); border: 1px solid rgba(255,77,109,.25); }
+        .statusDeadline { background: rgba(255,101,132,.15); color: var(--accent2); border: 1px solid rgba(255,101,132,.3); }
         .dayCheckSummary { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
         .dayCheckSummaryDone { color: var(--accent3); }
         .dayChevron { color: var(--muted); font-size: 10px; transition: transform .25s; flex-shrink: 0; }
@@ -248,8 +347,19 @@ export default function TrackerPage() {
         .badgeArtikel { background: rgba(249,202,36,.12); color: #ffd32a; border: 1px solid rgba(249,202,36,.3); }
         .badgeIg { background: rgba(253,121,168,.12); color: #fd79a8; border: 1px solid rgba(253,121,168,.3); }
         .badgeWeb { background: rgba(67,233,123,.1); color: #55efc4; border: 1px solid rgba(67,233,123,.3); }
+        .badgeErp { background: rgba(255,118,117,.12); color: #ff7675; border: 1px solid rgba(255,118,117,.3); }
         .badgeSpk { background: rgba(99,205,218,.12); color: #74b9ff; border: 1px solid rgba(99,205,218,.3); }
         .badgeRest { background: rgba(255,255,255,.05); color: var(--muted); border: 1px solid var(--border); }
+        .recSection { animation: fadeUp .6s .4s ease both; margin-bottom: 32px; }
+        .recCard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+        .recList { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .recListLi { display: flex; gap: 10px; font-size: 12px; line-height: 1.6; color: #c8c8e0; }
+        .recListLi::before { content: '→'; color: var(--accent); flex-shrink: 0; font-weight: 700; margin-top: 1px; }
+        .recListLi strong { color: var(--text); }
+        .summaryPills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; animation: fadeUp .6s .5s ease both; }
+        .pill { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 11px; display: flex; flex-direction: column; gap: 3px; min-width: 80px; }
+        .pillValue { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; line-height: 1; }
+        .pillLabel { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
         .recSection { animation: fadeUp .6s .4s ease both; margin-bottom: 32px; }
         .recCard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
         .recList { list-style: none; display: flex; flex-direction: column; gap: 10px; }
@@ -268,6 +378,23 @@ export default function TrackerPage() {
         .footer { text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 48px; opacity: .4; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+        @keyframes checkPop { 0% { transform: scale(1); } 40% { transform: scale(1.3); } 100% { transform: scale(1); } }
+        .checkPop { animation: checkPop .25s ease; }
+
+        @media (max-width: 480px) {
+          .tracker-container { padding: 20px 12px 80px; }
+          .dayDate { min-width: 60px; font-size: 12px; }
+          .dayLabel { font-size: 10px; }
+          .dayStatus { display: none; }
+          .schedTime { min-width: 68px; font-size: 9px; }
+          .scheduleRow { padding: 10px 12px; gap: 8px; }
+          .schedBadge { display: none; }
+          .countdownBar { padding: 14px 16px; gap: 14px; }
+          .tasksGrid { gap: 10px; }
+          .header h1 { font-size: clamp(22px, 8vw, 36px); }
+          .recCard { padding: 16px; }
+          .globalProgress { padding: 14px 16px; }
+        }
       `}</style>
 
       <div className="tracker-container">
@@ -308,7 +435,7 @@ export default function TrackerPage() {
 
         <div className="warningBlock">
           <span className="warningIcon">⚠️</span>
-          <div><strong>Perhatian!</strong> Tgl 1–3 Juni hanya sore–malam. <strong>400 Artikel deadline 31 Mei</strong> — harus dikebut hari ini & besok!</div>
+          <div><strong>Perhatian!</strong> Tgl 1–3 Juni hanya sore–malam. Tgl 30–31 Mei kemungkinan cabut + no signal. <strong>400 Artikel deadline 31 Mei</strong> — harus dikebut hari ini & besok!</div>
         </div>
 
         <div className="sectionTitle">Task Overview</div>
@@ -365,6 +492,35 @@ export default function TrackerPage() {
               </div>
             );
           })}
+        </div>
+
+        <div className="recSection">
+          <div className="sectionTitle">Rekomendasi Strategi</div>
+          <div className="recCard">
+            <ul className="recList">
+              <li className="recListLi"><strong>400 Artikel adalah prioritas mutlak 28–29 Mei.</strong> Risiko no signal 30–31 Mei = idealnya 350+ sudah selesai sebelum pergi. Pakai template & batch writing.</li>
+              <li className="recListLi"><strong>Hubungi kelompok SCM malam ini juga.</strong> Diskusi bisa via WA/online. Makin cepat rancangan jurnal dibagi, makin enteng beban kamu.</li>
+              <li className="recListLi"><strong>Observasi EAP dijadwalkan 1 Juni sore</strong> — pas banget karena baru bisa sore-malam. Tulis langsung setelah pulang, sementara data masih segar.</li>
+              <li className="recListLi"><strong>Website + Laporan di-blok full 4–5 Juni</strong> karena butuh fokus panjang. Jangan dicicil nanggung.</li>
+              <li className="recListLi"><strong>Feed IG KKN paling fleksibel</strong> — kerjain 3–5 Juni setelah jurnal mulai jelas. Konten IG butuh data progress KKN yang lain.</li>
+              <li className="recListLi"><strong>Rev SPK + ERP Task 3 satukan 1 sesi</strong> di 29 Mei malam. Relatif cepat kalau memang tinggal revisi/finalisasi.</li>
+              <li className="recListLi"><strong>Jangan skip buffer 6–7 Juni.</strong> Ini penyelamat kalau ada yang molor. Fokus nambal lubang, bukan task baru.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="sectionTitle">Ringkasan</div>
+        <div className="summaryPills">
+          <div className="pill"><div className="pillValue" style={{ color: '#ff6584' }}>{countdownData.daysLeft}</div><div className="pillLabel">Hari sisa</div></div>
+          <div className="pill"><div className="pillValue" style={{ color: '#ffd32a' }}>6</div><div className="pillLabel">Task utama</div></div>
+          <div className="pill"><div className="pillValue" style={{ color: '#a29bfe' }}>3</div><div className="pillLabel">Hari potong</div></div>
+          <div className="pill"><div className="pillValue" style={{ color: '#ff4d6d' }}>2</div><div className="pillLabel">Hari offline</div></div>
+          <div className="pill"><div className="pillValue" style={{ color: '#55efc4' }}>2</div><div className="pillLabel">Hari buffer</div></div>
+          <div className="pill"><div className="pillValue" style={{ color: '#fd79a8' }}>400</div><div className="pillLabel">Artikel 31 Mei</div></div>
+        </div>
+
+        <div className="resetWrap">
+          <button className="resetBtn" onClick={resetAll}>🗑 RESET SEMUA CHECKLIST</button>
         </div>
 
         <div className="footer">Made for KKN · Deadline 8 Juni 2026 · Semangat! 💪<br/>Checklist tersimpan otomatis di browser kamu</div>
