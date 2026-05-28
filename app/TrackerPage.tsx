@@ -304,6 +304,8 @@ export default function TrackerPage() {
 
         body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; overflow-x: hidden; font-size: 14px; }
 
+        html { scroll-behavior: smooth; }
+
         .tracker-container { max-width: 860px; margin: 0 auto; padding: 32px 16px 100px; }
         .header { margin-bottom: 32px; animation: fadeUp .6s ease both; }
         .headerBadge { display: inline-flex; align-items: center; gap: 7px; background: rgba(108,99,255,.12); border: 1px solid rgba(108,99,255,.3); border-radius: 100px; padding: 5px 14px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
@@ -312,14 +314,14 @@ export default function TrackerPage() {
         .headerSpan { background: linear-gradient(135deg, #6c63ff, #fd79a8, #43e97b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .headerMeta { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 12px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
         .headerMetaSpan { display: flex; align-items: center; gap: 5px; }
-        .globalProgress { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; margin-bottom: 24px; animation: fadeUp .6s .05s ease both; }
+        .globalProgress { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; margin-bottom: 24px; animation: fadeUp .6s .05s ease both; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
         .gpTop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
         .gpTitle { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
         .gpCount { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--accent3); }
         .gpCountSpan { font-size: 13px; color: var(--muted); font-weight: 400; }
-        .gpTrack { background: var(--surface2); height: 8px; border-radius: 100px; overflow: hidden; }
+        .gpTrack { background: var(--surface2); height: 8px; border-radius: 100px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,.3); }
         .gpFill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent3)); transition: width .5s cubic-bezier(.4,0,.2,1); }
-        .countdownBar { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; animation: fadeUp .6s .1s ease both; }
+        .countdownBar { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; animation: fadeUp .6s .1s ease both; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
         .countdownLabel { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
         .countdownDays { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 800; color: var(--accent2); line-height: 1; }
         .progressOuter { flex: 1; min-width: 160px; }
@@ -330,8 +332,9 @@ export default function TrackerPage() {
         .sectionTitle { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
         .sectionTitle::after { content: ''; flex: 1; height: 1px; background: var(--border); }
         .tasksGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 36px; animation: fadeUp .6s .2s ease both; }
-        .taskCard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; position: relative; overflow: hidden; transition: transform .2s, border-color .2s, background .3s; cursor: pointer; }
-        .taskCard:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.12); }
+        .taskCard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; position: relative; overflow: hidden; transition: transform .2s, border-color .2s, background .3s, box-shadow .2s; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+        .taskCard:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.12); box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+        .taskCard:active { transform: translateY(0); }
         .taskCardDone { background: var(--done-bg); border-color: var(--done-border); opacity: .7; }
         .taskCardDone .taskTitle { text-decoration: line-through; color: var(--muted); }
         .taskCard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
@@ -340,8 +343,9 @@ export default function TrackerPage() {
         .taskCard.medium::before { background: linear-gradient(90deg, #6c63ff, #a29bfe); }
         .taskCardTop { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
         .taskNumber { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; }
-        .cardCheck { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); background: var(--surface2); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all .2s; font-size: 11px; }
+        .cardCheck { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); background: var(--surface2); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all .2s; font-size: 11px; -webkit-tap-highlight-color: transparent; }
         .cardCheck:hover { border-color: var(--accent3); }
+        .cardCheck:active { transform: scale(0.95); }
         .cardCheckChecked { background: var(--accent3); border-color: var(--accent3); }
         .taskTitle { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 5px; line-height: 1.3; }
         .taskDesc { font-size: 11px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
@@ -352,8 +356,8 @@ export default function TrackerPage() {
         .taskHours { position: absolute; bottom: 12px; right: 14px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
         .timeline { animation: fadeUp .6s .3s ease both; margin-bottom: 36px; }
         .dayBlock { margin-bottom: 6px; }
-        .dayHeader { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: background .2s, border-color .2s; user-select: none; min-height: 52px; }
-        .dayHeader:active { background: var(--surface2); }
+        .dayHeader { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: background .2s, border-color .2s, box-shadow .2s; user-select: none; min-height: 52px; box-shadow: 0 2px 4px rgba(0,0,0,.1); }
+        .dayHeader:active { background: var(--surface2); box-shadow: 0 4px 8px rgba(0,0,0,.15); }
         .dayHeaderExpanded { border-radius: 12px 12px 0 0; border-bottom-color: transparent; background: var(--surface2); }
         .dayHeaderAllDone { border-color: var(--done-border); background: var(--done-bg); }
         .dayDot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
@@ -379,8 +383,9 @@ export default function TrackerPage() {
         .scheduleRowLast { border-bottom: none; }
         .scheduleRowDone { background: rgba(67,233,123,.04); }
         .scheduleRowDone .schedTask strong, .scheduleRowDone .schedTime { opacity: .45; text-decoration: line-through; }
-        .rowCheck { width: 20px; height: 20px; min-width: 20px; border-radius: 6px; border: 2px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 11px; margin-top: 1px; transition: all .2s; flex-shrink: 0; }
+        .rowCheck { width: 20px; height: 20px; min-width: 20px; border-radius: 6px; border: 2px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 11px; margin-top: 1px; transition: all .2s; flex-shrink: 0; -webkit-tap-highlight-color: transparent; }
         .rowCheck:hover { border-color: var(--accent3); }
+        .rowCheck:active { transform: scale(0.92); }
         .rowCheckChecked { background: var(--accent3); border-color: var(--accent3); color: #000; }
         .schedTime { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); min-width: 80px; padding-top: 2px; flex-shrink: 0; line-height: 1.4; }
         .schedTask { font-size: 12px; line-height: 1.5; flex: 1; }
@@ -395,19 +400,15 @@ export default function TrackerPage() {
         .badgeSpk { background: rgba(99,205,218,.12); color: #74b9ff; border: 1px solid rgba(99,205,218,.3); }
         .badgeRest { background: rgba(255,255,255,.05); color: var(--muted); border: 1px solid var(--border); }
         .recSection { animation: fadeUp .6s .4s ease both; margin-bottom: 32px; }
-        .recCard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+        .recCard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
         .recList { list-style: none; display: flex; flex-direction: column; gap: 10px; }
         .recListLi { display: flex; gap: 10px; font-size: 12px; line-height: 1.6; color: #c8c8e0; }
         .recListLi::before { content: '→'; color: var(--accent); flex-shrink: 0; font-weight: 700; margin-top: 1px; }
         .recListLi strong { color: var(--text); }
         .summaryPills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; animation: fadeUp .6s .5s ease both; }
-        .pill { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 11px; display: flex; flex-direction: column; gap: 3px; min-width: 80px; }
+        .pill { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 11px; display: flex; flex-direction: column; gap: 3px; min-width: 80px; box-shadow: 0 2px 4px rgba(0,0,0,.1); }
         .pillValue { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; line-height: 1; }
         .pillLabel { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
-        .recSection { animation: fadeUp .6s .4s ease both; margin-bottom: 32px; }
-        .recCard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
-        .recList { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .recListLi { display: flex; gap: 10px; font-size: 12px; line-height: 1.6; color: #c8c8e0; }
         .recListLi::before { content: '→'; color: var(--accent); flex-shrink: 0; font-weight: 700; margin-top: 1px; }
         .recListLi strong { color: var(--text); }
         .summaryPills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; animation: fadeUp .6s .5s ease both; }
@@ -415,35 +416,139 @@ export default function TrackerPage() {
         .pillValue { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; line-height: 1; }
         .pillLabel { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
         .resetWrap { margin-top: 28px; text-align: center; }
-        .resetBtn { background: rgba(255,77,109,.08); border: 1px solid rgba(255,77,109,.25); color: #ff8fa3; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; padding: 8px 20px; border-radius: 100px; cursor: pointer; transition: all .2s; }
+        .resetBtn { background: rgba(255,77,109,.08); border: 1px solid rgba(255,77,109,.25); color: #ff8fa3; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; padding: 8px 20px; border-radius: 100px; cursor: pointer; transition: all .2s; -webkit-tap-highlight-color: transparent; }
         .resetBtn:hover { background: rgba(255,77,109,.15); }
-        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a1a2e; border: 1px solid var(--border); border-radius: 12px; padding: 10px 20px; font-size: 12px; font-family: 'DM Mono', monospace; color: var(--accent3); z-index: 100; opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); }
+        .resetBtn:active { transform: scale(0.97); }
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a1a2e; border: 1px solid var(--border); border-radius: 12px; padding: 10px 20px; font-size: 12px; font-family: 'DM Mono', monospace; color: var(--accent3); z-index: 100; opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
         .toastShow { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        @media (max-width: 600px) {
+          .toast { bottom: 20px; left: 16px; right: 16px; transform: translateY(100px); }
+          .toastShow { transform: translateY(0); }
+        }
         .footer { text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 48px; opacity: .4; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
         @keyframes checkPop { 0% { transform: scale(1); } 40% { transform: scale(1.3); } 100% { transform: scale(1); } }
         .checkPop { animation: checkPop .25s ease; }
 
-        @media (max-width: 480px) {
-          .tracker-container { padding: 20px 12px 80px; }
-          .dayDate { min-width: 60px; font-size: 12px; }
-          .dayLabel { font-size: 10px; }
+        /* Tablet & Medium */
+        @media (max-width: 768px) {
+          .tracker-container { padding: 24px 16px 100px; }
+          .header h1 { font-size: clamp(24px, 6vw, 36px); }
+          .tasksGrid { grid-template-columns: 1fr; gap: 10px; }
+          .countdownBar { flex-direction: column; gap: 16px; }
           .dayStatus { display: none; }
-          .schedTime { min-width: 68px; font-size: 9px; }
-          .scheduleRow { padding: 10px 12px; gap: 8px; }
           .schedBadge { display: none; }
-          .countdownBar { padding: 14px 16px; gap: 14px; }
-          .tasksGrid { gap: 10px; }
-          .header h1 { font-size: clamp(22px, 8vw, 36px); }
-          .recCard { padding: 16px; }
-          .globalProgress { padding: 14px 16px; }
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+          .tracker-container { padding: 16px 12px 90px; }
+          .header { margin-bottom: 20px; }
+          .headerBadge { padding: 4px 10px; font-size: 9px; }
+          .header h1 { font-size: clamp(20px, 6vw, 32px); margin-bottom: 12px; }
+          .headerMeta { gap: 10px; flex-direction: column; font-size: 10px; }
+          .globalProgress { padding: 14px 12px; margin-bottom: 16px; }
+          .gpTop { flex-direction: column; gap: 12px; }
+          .gpCount { font-size: 18px; }
+          .countdownBar { padding: 12px 14px; gap: 12px; flex-direction: column; margin-bottom: 16px; }
+          .countdownLabel { font-size: 9px; }
+          .countdownDays { font-size: 24px; }
+          .progressOuter { min-width: 100%; }
+          .warningBlock { padding: 10px 12px; font-size: 11px; gap: 8px; margin-bottom: 20px; }
+          .warningIcon { font-size: 14px; }
+          .sectionTitle { font-size: 10px; letter-spacing: 1px; margin-bottom: 12px; }
+          .tasksGrid { grid-template-columns: 1fr; gap: 8px; margin-bottom: 24px; }
+          .taskCard { padding: 12px; }
+          .taskCardTop { margin-bottom: 5px; }
+          .taskTitle { font-size: 13px; margin-bottom: 4px; }
+          .taskDesc { font-size: 10px; margin-bottom: 8px; }
+          .taskTag { font-size: 8px; padding: 1px 7px; }
+          .taskHours { font-size: 8px; right: 10px; bottom: 10px; }
+          .dayBlock { margin-bottom: 4px; }
+          .dayHeader { padding: 10px 12px; gap: 8px; min-height: 48px; flex-wrap: wrap; }
+          .dayDate { font-size: 11px; min-width: 55px; }
+          .dayLabel { font-size: 10px; }
+          .dayRight { gap: 6px; }
+          .dayCheckSummary { font-size: 8px; }
+          .dayChevron { font-size: 9px; }
+          .dayBody { }
+          .scheduleRow { padding: 9px 10px; gap: 8px; }
+          .schedTime { font-size: 9px; min-width: 60px; }
+          .schedTask { font-size: 11px; line-height: 1.4; }
+          .schedTask strong { font-size: 11px; }
+          .schedTask .sub { font-size: 9px; margin-top: 1px; }
+          .schedBadge { display: none; }
+          .recSection { margin-bottom: 24px; }
+          .recCard { padding: 12px; }
+          .recList { gap: 8px; }
+          .recListLi { gap: 8px; font-size: 11px; line-height: 1.5; }
+          .summaryPills { gap: 6px; margin-top: 12px; }
+          .pill { padding: 8px 10px; font-size: 10px; min-width: 70px; gap: 2px; }
+          .pillValue { font-size: 18px; }
+          .pillLabel { font-size: 8px; }
+          .resetWrap { margin-top: 20px; }
+          .resetBtn { padding: 7px 16px; font-size: 9px; }
+          .footer { font-size: 9px; margin-top: 32px; }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 400px) {
+          .tracker-container { padding: 14px 10px 85px; }
+          .header { margin-bottom: 16px; }
+          .headerBadge { font-size: 8px; padding: 3px 8px; }
+          .header h1 { font-size: clamp(18px, 5vw, 28px); line-height: 1.1; }
+          .headerMeta { font-size: 9px; gap: 8px; }
+          .headerMetaSpan { gap: 4px; }
+          .globalProgress { padding: 12px 10px; margin-bottom: 14px; }
+          .gpTitle { font-size: 8px; }
+          .gpCount { font-size: 16px; }
+          .gpCountSpan { font-size: 11px; }
+          .gp-days { display: none; }
+          .countdownBar { padding: 10px 12px; gap: 10px; margin-bottom: 14px; }
+          .countdownLabel { font-size: 8px; }
+          .countdownDays { font-size: 20px; }
+          .progressTrack { margin-top: 4px; }
+          .warningBlock { padding: 8px 10px; font-size: 10px; gap: 6px; margin-bottom: 16px; }
+          .warningIcon { font-size: 12px; }
+          .sectionTitle { font-size: 9px; letter-spacing: 0.5px; margin-bottom: 10px; }
+          .tasksGrid { gap: 6px; margin-bottom: 20px; }
+          .taskCard { padding: 10px; }
+          .taskCardTop { margin-bottom: 4px; }
+          .taskNumber { font-size: 8px; }
+          .cardCheck { width: 20px; height: 20px; font-size: 10px; }
+          .taskTitle { font-size: 12px; margin-bottom: 3px; }
+          .taskDesc { font-size: 9px; margin-bottom: 6px; }
+          .taskTag { font-size: 7px; padding: 1px 6px; }
+          .taskHours { font-size: 7px; right: 8px; bottom: 8px; }
+          .dayHeader { padding: 8px 10px; gap: 6px; min-height: 44px; }
+          .dayDate { font-size: 10px; min-width: 50px; }
+          .dayLabel { font-size: 9px; }
+          .dayDot { width: 6px; height: 6px; }
+          .dayCheckSummary { font-size: 7px; }
+          .dayChevron { font-size: 8px; }
+          .scheduleRow { padding: 8px 8px; gap: 6px; }
+          .schedTime { font-size: 8px; min-width: 55px; }
+          .schedTask { font-size: 10px; line-height: 1.3; }
+          .schedTask strong { font-size: 10px; }
+          .schedTask .sub { font-size: 8px; margin-top: 1px; }
+          .rowCheck { width: 18px; height: 18px; font-size: 9px; }
+          .recCard { padding: 10px; }
+          .recList { gap: 6px; }
+          .recListLi { gap: 6px; font-size: 10px; line-height: 1.4; }
+          .summaryPills { gap: 5px; margin-top: 10px; }
+          .pill { padding: 6px 8px; font-size: 9px; min-width: 65px; }
+          .pillValue { font-size: 16px; }
+          .pillLabel { font-size: 7px; }
+          .resetBtn { padding: 6px 14px; font-size: 8px; }
+          .footer { font-size: 8px; margin-top: 24px; }
         }
       `}</style>
 
       <div className="tracker-container">
         <div className="header">
-          <div className="headerBadge">KKN Task Tracker</div>
+          <div className="headerBadge">task Tracker</div>
           <h1>Deadline Tracker<br/><span className="headerSpan">8 Juni 2026</span></h1>
           <div className="headerMeta">
             <span className="headerMetaSpan">📅 Mulai: 28 Mei 2026</span>
