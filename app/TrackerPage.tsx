@@ -13,6 +13,10 @@ interface Card {
   hours: string;
 }
 
+interface CustomCard extends Card {
+  isCustom: true;
+}
+
 interface ScheduleRow {
   id: string;
   time: string;
@@ -180,6 +184,7 @@ const DAYS_DATA: Day[] = [
 ];
 
 const STORAGE_KEY = 'kkn_checklist_v2';
+const CUSTOM_TASKS_KEY = 'kkn_custom_tasks_v1';
 
 export default function TrackerPage() {
   const [state, setState] = useState<{ [key: string]: boolean }>({});
@@ -188,12 +193,24 @@ export default function TrackerPage() {
   const [toastShow, setToastShow] = useState(false);
   const [countdownData, setCountdownData] = useState<{ daysLeft: number; hoursLeft: number; pct: number }>({ daysLeft: 0, hoursLeft: 0, pct: 0 });
   const [progress, setProgress] = useState<{ done: number; total: number }>({ done: 0, total: 0 });
+  const [customCards, setCustomCards] = useState<CustomCard[]>([]);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [formTitle, setFormTitle] = useState('');
+  const [formDesc, setFormDesc] = useState('');
+  const [formPriority, setFormPriority] = useState<'urgent' | 'high' | 'medium'>('medium');
   const toastTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) setState(JSON.parse(saved));
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(CUSTOM_TASKS_KEY);
+      if (saved) setCustomCards(JSON.parse(saved));
     } catch {}
   }, []);
 
@@ -217,11 +234,11 @@ export default function TrackerPage() {
   );
 
   useEffect(() => {
-    const allIds = [...CARDS_DATA.map(c => c.id), ...DAYS_DATA.flatMap(d => d.rows.map(r => r.id))];
+    const allIds = [...CARDS_DATA.map(c => c.id), ...customCards.map(c => c.id), ...DAYS_DATA.flatMap(d => d.rows.map(r => r.id))];
     const total = allIds.length;
     const done = allIds.filter(id => isChecked(id)).length;
     setProgress({ done, total });
-  }, [state, isChecked]);
+  }, [state, isChecked, customCards]);
 
   useEffect(() => {
     const updateCountdown = () => {
@@ -273,6 +290,59 @@ export default function TrackerPage() {
     setState({});
     saveState({});
     showToast('Semua checklist di-reset 🔄');
+  };
+
+  const saveCustomTasks = useCallback((tasks: CustomCard[]) => {
+    try {
+      localStorage.setItem(CUSTOM_TASKS_KEY, JSON.stringify(tasks));
+    } catch {}
+  }, []);
+
+  const addCustomTask = () => {
+    if (!formTitle.trim()) {
+      showToast('Judul task harus diisi! 📝');
+      return;
+    }
+
+    const priorityConfig = {
+      urgent: { tagLabel: '🔥 URGENT', tag: 'tag-urgent', num: 'CUSTOM' },
+      high: { tagLabel: '⚡ HIGH', tag: 'tag-high', num: 'CUSTOM' },
+      medium: { tagLabel: '💻 MEDIUM', tag: 'tag-medium', num: 'CUSTOM' },
+    };
+
+    const config = priorityConfig[formPriority];
+    const newCustomCard: CustomCard = {
+      id: `custom_${Date.now()}`,
+      num: config.num,
+      title: formTitle.trim(),
+      desc: formDesc.trim() || 'Task custom',
+      tag: config.tag,
+      tagLabel: config.tagLabel,
+      cls: formPriority,
+      hours: '~',
+      isCustom: true,
+    };
+
+    const updated = [...customCards, newCustomCard];
+    setCustomCards(updated);
+    saveCustomTasks(updated);
+    setFormTitle('');
+    setFormDesc('');
+    setFormPriority('medium');
+    setShowAddForm(false);
+    showToast('Task baru ditambahkan! ✨');
+  };
+
+  const deleteCustomTask = (id: string) => {
+    if (!confirm('Hapus task ini?')) return;
+    const updated = customCards.filter(c => c.id !== id);
+    setCustomCards(updated);
+    saveCustomTasks(updated);
+    const newState = { ...state };
+    delete newState[id];
+    setState(newState);
+    saveState(newState);
+    showToast('Task dihapus 🗑');
   };
 
   const pct = progress.total > 0 ? (progress.done / progress.total * 100) : 0;
@@ -419,12 +489,42 @@ export default function TrackerPage() {
         .resetBtn { background: rgba(255,77,109,.08); border: 1px solid rgba(255,77,109,.25); color: #ff8fa3; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; padding: 8px 20px; border-radius: 100px; cursor: pointer; transition: all .2s; -webkit-tap-highlight-color: transparent; }
         .resetBtn:hover { background: rgba(255,77,109,.15); }
         .resetBtn:active { transform: scale(0.97); }
+        .addTaskBtn { background: linear-gradient(135deg, rgba(108,99,255,.12), rgba(67,233,123,.08)); border: 1px solid rgba(108,99,255,.3); color: var(--accent); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; padding: 8px 20px; border-radius: 100px; cursor: pointer; transition: all .2s; -webkit-tap-highlight-color: transparent; margin-bottom: 24px; }
+        .addTaskBtn:hover { background: linear-gradient(135deg, rgba(108,99,255,.2), rgba(67,233,123,.15)); }
+        .addTaskBtn:active { transform: scale(0.97); }
+        .formOverlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.5); display: none; z-index: 1000; animation: fadeUp .2s ease; }
+        .formOverlayShow { display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .formModal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; max-width: 400px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.5); animation: fadeUp .3s ease; }
+        .formHeader { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+        .formGroup { margin-bottom: 14px; }
+        .formLabel { display: block; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .formInput, .formTextarea { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 12px; transition: border-color .2s; }
+        .formInput:focus, .formTextarea:focus { outline: none; border-color: var(--accent); }
+        .formTextarea { resize: vertical; min-height: 70px; }
+        .priorityOptions { display: flex; gap: 8px; }
+        .priorityOption { flex: 1; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; text-align: center; cursor: pointer; font-size: 11px; font-family: 'DM Mono', monospace; transition: all .2s; background: var(--surface2); }
+        .priorityOption:hover { border-color: var(--accent); }
+        .priorityOptionActive { border-color: var(--accent); background: rgba(108,99,255,.15); color: var(--accent); font-weight: 600; }
+        .formActions { display: flex; gap: 8px; margin-top: 18px; }
+        .formBtn { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .5px; text-transform: uppercase; cursor: pointer; transition: all .2s; -webkit-tap-highlight-color: transparent; }
+        .formBtnSubmit { background: linear-gradient(135deg, var(--accent), #a29bfe); color: #fff; border: none; font-weight: 600; }
+        .formBtnSubmit:hover { opacity: .9; }
+        .formBtnSubmit:active { transform: scale(0.98); }
+        .formBtnCancel { color: var(--muted); }
+        .formBtnCancel:hover { background: var(--surface2); }
+        .deleteTaskBtn { position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; border-radius: 50%; background: rgba(255,77,109,.1); border: 1px solid rgba(255,77,109,.3); color: #ff8fa3; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all .2s; opacity: 0; }
+        .taskCard:hover .deleteTaskBtn { opacity: 1; }
+        .deleteTaskBtn:active { transform: scale(0.9); }
         .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a1a2e; border: 1px solid var(--border); border-radius: 12px; padding: 10px 20px; font-size: 12px; font-family: 'DM Mono', monospace; color: var(--accent3); z-index: 100; opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
         .toastShow { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         @media (max-width: 600px) {
           .toast { bottom: 20px; left: 16px; right: 16px; transform: translateY(100px); }
           .toastShow { transform: translateY(0); }
+          .formModal { max-width: 90vw; padding: 18px; }
+          .formHeader { font-size: 16px; }
+          .formInput, .formTextarea { font-size: 11px; }
+          .priorityOptions { flex-direction: column; }
         }
         .footer { text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 48px; opacity: .4; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -588,11 +688,28 @@ export default function TrackerPage() {
         </div>
 
         <div className="sectionTitle">Task Overview</div>
+        <button className="addTaskBtn" onClick={() => setShowAddForm(true)}>+ TAMBAH TUGAS BARU</button>
         <div className="tasksGrid">
           {CARDS_DATA.map(c => {
             const done = isChecked(c.id);
             return (
               <div key={c.id} className={`taskCard ${c.cls}${done ? ' taskCardDone' : ''}`}>
+                <div className="taskCardTop">
+                  <div className="taskNumber">{c.num}</div>
+                  <div className={`cardCheck${done ? ' cardCheckChecked' : ''}`} onClick={() => toggleCard(c.id)} style={{ cursor: 'pointer' }}>{done ? '✓' : ''}</div>
+                </div>
+                <div className="taskTitle">{c.title}</div>
+                <div className="taskDesc">{c.desc}</div>
+                <span className={`taskTag ${c.tag}`}>{c.tagLabel}</span>
+                <div className="taskHours">{c.hours}</div>
+              </div>
+            );
+          })}
+          {customCards.map(c => {
+            const done = isChecked(c.id);
+            return (
+              <div key={c.id} className={`taskCard ${c.cls}${done ? ' taskCardDone' : ''}`} style={{ position: 'relative' }}>
+                <button className="deleteTaskBtn" onClick={() => deleteCustomTask(c.id)} title="Hapus task">×</button>
                 <div className="taskCardTop">
                   <div className="taskNumber">{c.num}</div>
                   <div className={`cardCheck${done ? ' cardCheckChecked' : ''}`} onClick={() => toggleCard(c.id)} style={{ cursor: 'pointer' }}>{done ? '✓' : ''}</div>
@@ -676,6 +793,67 @@ export default function TrackerPage() {
       </div>
 
       <div className={`toast${toastShow ? ' toastShow' : ''}`}>{toastMsg}</div>
+
+      <div className={`formOverlay${showAddForm ? ' formOverlayShow' : ''}`} onClick={() => setShowAddForm(false)}>
+        <div className="formModal" onClick={e => e.stopPropagation()}>
+          <div className="formHeader">Tambah Tugas Baru</div>
+          
+          <div className="formGroup">
+            <label className="formLabel">Judul Tugas *</label>
+            <input 
+              type="text" 
+              className="formInput" 
+              placeholder="Contoh: Revisi Laporan..." 
+              value={formTitle}
+              onChange={e => setFormTitle(e.target.value)}
+              onKeyPress={e => e.key === 'Enter' && addCustomTask()}
+            />
+          </div>
+
+          <div className="formGroup">
+            <label className="formLabel">Deskripsi (opsional)</label>
+            <textarea 
+              className="formTextarea" 
+              placeholder="Jelaskan detail tugas..."
+              value={formDesc}
+              onChange={e => setFormDesc(e.target.value)}
+            ></textarea>
+          </div>
+
+          <div className="formGroup">
+            <label className="formLabel">Prioritas</label>
+            <div className="priorityOptions">
+              <button 
+                className={`priorityOption${formPriority === 'urgent' ? ' priorityOptionActive' : ''}`}
+                onClick={() => setFormPriority('urgent')}
+              >
+                🔥 URGENT
+              </button>
+              <button 
+                className={`priorityOption${formPriority === 'high' ? ' priorityOptionActive' : ''}`}
+                onClick={() => setFormPriority('high')}
+              >
+                ⚡ HIGH
+              </button>
+              <button 
+                className={`priorityOption${formPriority === 'medium' ? ' priorityOptionActive' : ''}`}
+                onClick={() => setFormPriority('medium')}
+              >
+                💻 MEDIUM
+              </button>
+            </div>
+          </div>
+
+          <div className="formActions">
+            <button className="formBtn formBtnSubmit" onClick={addCustomTask}>
+              + TAMBAH
+            </button>
+            <button className="formBtn formBtnCancel" onClick={() => setShowAddForm(false)}>
+              BATAL
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
