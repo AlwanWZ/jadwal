@@ -128,9 +128,53 @@ const DAYS_DATA: Day[] = [
     ]
   },
   {
-    id: 'd11', date: '8 Jun · Sen', label: '🎯 DEADLINE — Submit semua!', dot: 'dot-deadline', status: 'status-deadline', statusLabel: 'DEADLINE',
+    id: 'd11', date: '8 Jun · Sen', label: '🎯 DEADLINE KKN + UAS SPK', dot: 'dot-deadline', status: 'status-deadline', statusLabel: 'DEADLINE',
     rows: [
-      { id: 'r11_0', time: 'Pagi', task: '✅ Submit semua task sesuai ketentuan', sub: 'Jurnal EAP, Jurnal SCM, Website + Laporan, Feed IG, Rev SPK, ERP Task 3', badge: 'badge-rest', badgeLabel: 'SUBMIT ALL' },
+      { id: 'r11_0', time: 'Pagi', task: '✅ Submit semua task KKN', sub: 'Jurnal EAP, Jurnal SCM, Website + Laporan, Feed IG, Rev SPK, ERP Task 3', badge: 'badge-rest', badgeLabel: 'SUBMIT KKN' },
+      { id: 'r11_1', time: 'Siang', task: '📚 UAS SPK — Kumpul tugas akhir', sub: 'Finalisasi semua deliverable SPK, siap untuk presentasi/ujian', badge: 'badge-spk', badgeLabel: 'SPK UAS' },
+    ]
+  },
+  {
+    id: 'd12', date: '9 Jun · Sel', label: 'UAS SCM', dot: 'dot-normal', status: 'status-normal', statusLabel: 'EXAM',
+    rows: [
+      { id: 'r12_0', time: 'Pagi-Siang', task: '📚 UAS SCM — Kumpul & ujian', sub: 'Submit project SCM (jurnal, laporan, analisis). Review materi sebelumnya', badge: 'badge-jurnal', badgeLabel: 'SCM UAS' },
+      { id: 'r12_1', time: 'Sore', task: 'Persiapan eBusiness', sub: 'Review project & materi untuk ujian esok', badge: 'badge-rest', badgeLabel: 'PREP' },
+    ]
+  },
+  {
+    id: 'd13', date: '10 Jun · Rab', label: 'UAS eBusiness', dot: 'dot-normal', status: 'status-normal', statusLabel: 'EXAM',
+    rows: [
+      { id: 'r13_0', time: 'Pagi-Siang', task: '📚 UAS eBusiness — Kumpul & ujian', sub: 'Submit project eBusiness (website/sistem). Presentasi & jawab pertanyaan', badge: 'badge-web', badgeLabel: 'EBIZ UAS' },
+      { id: 'r13_1', time: 'Sore', task: 'Persiapan Metopen', sub: 'Siapkan materi & catatan untuk ujian metodologi', badge: 'badge-rest', badgeLabel: 'PREP' },
+    ]
+  },
+  {
+    id: 'd14', date: '11 Jun · Kam', label: 'UAS Metopen', dot: 'dot-normal', status: 'status-normal', statusLabel: 'EXAM',
+    rows: [
+      { id: 'r14_0', time: 'Pagi-Siang', task: '📚 UAS Metopen — Ujian', sub: 'Ujian metodologi penelitian. Persiapkan jawaban essay & analisis kasus', badge: 'badge-rest', badgeLabel: 'METOPEN' },
+      { id: 'r14_1', time: 'Sore', task: 'Persiapan KPAM & ERP', sub: 'Review project KPAM & ERP task 3 untuk ujian besok', badge: 'badge-rest', badgeLabel: 'PREP' },
+    ]
+  },
+  {
+    id: 'd15', date: '12 Jun · Jum', label: 'UAS KPAM & ERP', dot: 'dot-normal', status: 'status-normal', statusLabel: 'EXAM',
+    rows: [
+      { id: 'r15_0', time: 'Pagi', task: '📚 UAS KPAM — Kumpul & ujian', sub: 'Submit project KPAM. Quiz & diskusi tentang aspek kuantitatif', badge: 'badge-rest', badgeLabel: 'KPAM UAS' },
+      { id: 'r15_1', time: 'Siang-Sore', task: '📚 UAS ERP — Kumpul & ujian', sub: 'Submit ERP Task 3. Presentasi implementasi sistem ERP', badge: 'badge-erp', badgeLabel: 'ERP UAS' },
+      { id: 'r15_2', time: 'Malam', task: 'Rest & persiapan EAP', sub: 'Istirahat, review materi EAP untuk 3 hari ke depan', badge: 'badge-rest', badgeLabel: 'REST' },
+    ]
+  },
+  {
+    id: 'd16', date: '15 Jun · Sen', label: 'UAS EAP', dot: 'dot-normal', status: 'status-normal', statusLabel: 'EXAM',
+    rows: [
+      { id: 'r16_0', time: 'Pagi-Siang', task: '📚 UAS EAP — Kumpul & ujian', sub: 'Submit jurnal EAP lengkap. Presentasi hasil penelitian & analisis data', badge: 'badge-jurnal', badgeLabel: 'EAP UAS' },
+      { id: 'r16_1', time: 'Sore', task: 'Persiapan Data Mining', sub: 'Review project data mining & algoritma yang digunakan', badge: 'badge-rest', badgeLabel: 'PREP' },
+    ]
+  },
+  {
+    id: 'd17', date: '17 Jun · Rab', label: 'UAS Data Mining', dot: 'dot-deadline', status: 'status-deadline', statusLabel: 'FINAL EXAM',
+    rows: [
+      { id: 'r17_0', time: 'Pagi-Siang', task: '📚 UAS Data Mining — Kumpul & ujian', sub: 'Submit project data mining (code, dataset, hasil analisis). Presentasi & Q&A', badge: 'badge-web', badgeLabel: 'DM UAS' },
+      { id: 'r17_1', time: 'Sore', task: '🎉 Semua UAS selesai!', sub: 'Istirahat, semester berakhir. Good job! 💪', badge: 'badge-rest', badgeLabel: 'DONE' },
     ]
   },
 ];
