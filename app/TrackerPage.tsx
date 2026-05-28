@@ -185,6 +185,7 @@ const DAYS_DATA: Day[] = [
 
 const STORAGE_KEY = 'kkn_checklist_v2';
 const CUSTOM_TASKS_KEY = 'kkn_custom_tasks_v1';
+const ARTICLES_KEY = 'kkn_articles_count_v1';
 
 export default function TrackerPage() {
   const [state, setState] = useState<{ [key: string]: boolean }>({});
@@ -198,6 +199,7 @@ export default function TrackerPage() {
   const [formTitle, setFormTitle] = useState('');
   const [formDesc, setFormDesc] = useState('');
   const [formPriority, setFormPriority] = useState<'urgent' | 'high' | 'medium'>('medium');
+  const [articleCount, setArticleCount] = useState(0);
   const toastTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -211,6 +213,13 @@ export default function TrackerPage() {
     try {
       const saved = localStorage.getItem(CUSTOM_TASKS_KEY);
       if (saved) setCustomCards(JSON.parse(saved));
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(ARTICLES_KEY);
+      if (saved) setArticleCount(parseInt(saved, 10));
     } catch {}
   }, []);
 
@@ -343,6 +352,28 @@ export default function TrackerPage() {
     setState(newState);
     saveState(newState);
     showToast('Task dihapus 🗑');
+  };
+
+  const addArticles = (count: number) => {
+    const newCount = Math.min(articleCount + count, 400);
+    setArticleCount(newCount);
+    try {
+      localStorage.setItem(ARTICLES_KEY, newCount.toString());
+    } catch {}
+    if (newCount === 400) {
+      showToast('🎉 400 Artikel selesai! Sempurna!');
+    } else {
+      showToast(`+${count} artikel! Total: ${newCount}/400 📝`);
+    }
+  };
+
+  const resetArticles = () => {
+    if (!confirm('Reset jumlah artikel?')) return;
+    setArticleCount(0);
+    try {
+      localStorage.removeItem(ARTICLES_KEY);
+    } catch {}
+    showToast('Artikel di-reset 🔄');
   };
 
   const pct = progress.total > 0 ? (progress.done / progress.total * 100) : 0;
@@ -685,6 +716,23 @@ export default function TrackerPage() {
         <div className="warningBlock">
           <span className="warningIcon">⚠️</span>
           <div><strong>Perhatian!</strong> Tgl 1–3 Juni hanya sore–malam. Tgl 30–31 Mei kemungkinan cabut + no signal. <strong>400 Artikel deadline 31 Mei</strong> — harus dikebut hari ini & besok!</div>
+        </div>
+
+        <div style={{ background: 'var(--card-bg)', border: '2px solid var(--border)', borderRadius: '12px', padding: '18px', marginBottom: '24px' }}>
+          <div className="sectionTitle" style={{ marginTop: 0 }}>📝 Artikel Tracker</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+            <div style={{ fontSize: '28px', fontWeight: 'bold', color: 'var(--accent-purple)', fontFamily: "'Syne', sans-serif" }}>{articleCount}</div>
+            <div style={{ flex: 1, fontSize: '13px', color: 'var(--muted)' }}>/ 400 artikel<br/><span style={{ fontSize: '11px', opacity: 0.7 }}>Deadline: 31 Mei pukul 23:59</span></div>
+            <div style={{ fontSize: '24px' }}>{articleCount >= 400 ? '🎉' : articleCount >= 300 ? '🔥' : articleCount >= 200 ? '⚡' : '💻'}</div>
+          </div>
+          <div className="progressTrack" style={{ marginBottom: '14px', height: '8px' }}><div className="progressFill" style={{ width: `${(articleCount / 400 * 100).toFixed(1)}%`, background: articleCount >= 400 ? 'var(--accent-green)' : articleCount >= 300 ? '#ff6584' : 'var(--accent-purple)' }}></div></div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '12px' }}>
+            <button onClick={() => addArticles(10)} style={{ padding: '8px', fontSize: '12px', fontWeight: '600', borderRadius: '6px', border: 'none', background: 'var(--accent-purple)', color: 'white', cursor: 'pointer', transition: 'all 0.2s' }} onMouseEnter={(e) => (e.currentTarget.style.background = '#7d73ff')} onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--accent-purple)')}>+10</button>
+            <button onClick={() => addArticles(25)} style={{ padding: '8px', fontSize: '12px', fontWeight: '600', borderRadius: '6px', border: 'none', background: '#ff9d00', color: 'white', cursor: 'pointer', transition: 'all 0.2s' }} onMouseEnter={(e) => (e.currentTarget.style.background = '#ffb330')} onMouseLeave={(e) => (e.currentTarget.style.background = '#ff9d00')}>+25</button>
+            <button onClick={() => addArticles(50)} style={{ padding: '8px', fontSize: '12px', fontWeight: '600', borderRadius: '6px', border: 'none', background: '#ff6584', color: 'white', cursor: 'pointer', transition: 'all 0.2s' }} onMouseEnter={(e) => (e.currentTarget.style.background = '#ff7c99')} onMouseLeave={(e) => (e.currentTarget.style.background = '#ff6584')}>+50</button>
+            <button onClick={() => addArticles(100)} style={{ padding: '8px', fontSize: '12px', fontWeight: '600', borderRadius: '6px', border: 'none', background: 'var(--accent-green)', color: 'white', cursor: 'pointer', transition: 'all 0.2s' }} onMouseEnter={(e) => (e.currentTarget.style.background = '#5ddc9f')} onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--accent-green)')}>+100</button>
+          </div>
+          <button onClick={resetArticles} style={{ width: '100%', padding: '8px', fontSize: '11px', fontWeight: '600', borderRadius: '6px', border: '1px solid var(--border)', background: 'transparent', color: 'var(--muted)', cursor: 'pointer', transition: 'all 0.2s' }} onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-purple)')} onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}>Reset artikel</button>
         </div>
 
         <div className="sectionTitle">Task Overview</div>
