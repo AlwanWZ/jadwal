@@ -1,7 +1,7 @@
 import TrackerPage from './TrackerPage';
 
 export const metadata = {
-  title: 'KKN Task Tracker — Deadline 8 Juni',
+  title: 'KKN Task Tracker - Deadline 8 Juni',
   description: 'Deadline tracker untuk KKN dengan fitur checklist otomatis',
 };
 
